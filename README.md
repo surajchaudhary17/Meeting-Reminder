@@ -1,2 +1,2 @@
 # Meeting-Reminder
-animation will remind you for upcoming schedule or custom reminder.
+Desktop animation utility that will remind you for upcoming events or custom reminder.
