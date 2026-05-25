@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: transparent;
+  overflow: visible;
+  width: 100vw;
+  height: 100vh;
+}
+
+#stage {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  white-space: nowrap;
+  will-change: left, transform;
+}
+
+.clouds { display: flex; align-items: center; gap: 8px; }
+.cloud { background: white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+@keyframes fadeCloud { from{opacity:0.5} to{opacity:0.95} }
+
+#planeSvg {
+  width: 160px; height: 140px; flex-shrink: 0;
+  filter: drop-shadow(0 8px 22px rgba(230,60,120,0.55));
+  animation: planeBob 2s ease-in-out infinite;
+}
+@keyframes planeBob {
+  0%,100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-5px) rotate(1deg); }
+}
+
+#ropeSvg { display: block; flex-shrink: 0; }
+
+.card {
+  flex-shrink: 0;
+  background: #FF3D7F;
+  border-radius: 18px;
+  padding: 20px 40px;
+  box-shadow: 0 6px 32px rgba(255,60,127,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.bolt {
+  position: absolute;
+  width: 13px; height: 13px;
+  background: radial-gradient(circle at 35% 35%, #ecd07a, #b8922a);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.bolt.tl { top: -6px; left: 18px; }
+.bolt.bl { bottom: -6px; left: 18px; }
+
+.card-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 26px; font-weight: 800;
+  color: white; white-space: nowrap;
+  text-shadow: 0 2px 6px rgba(160,0,60,0.3);
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <!-- TRAILING CLOUDS -->
+  <div class="clouds">
+    <div style="position:relative;width:38px;height:28px;flex-shrink:0">
+      <div class="cloud" style="width:18px;height:18px;position:absolute;bottom:0;left:0;animation:fadeCloud 1.2s ease-in-out infinite alternate;animation-delay:0.2s"></div>
+      <div class="cloud" style="width:24px;height:22px;position:absolute;bottom:4px;left:10px;animation:fadeCloud 1.2s ease-in-out infinite alternate"></div>
+      <div class="cloud" style="width:14px;height:14px;position:absolute;bottom:0;left:24px;animation:fadeCloud 1.2s ease-in-out infinite alternate;animation-delay:0.4s"></div>
+    </div>
+    <div style="position:relative;width:50px;height:36px;flex-shrink:0">
+      <div class="cloud" style="width:22px;height:22px;position:absolute;bottom:0;left:0;animation:fadeCloud 1.4s ease-in-out infinite alternate;animation-delay:0.1s"></div>
+      <div class="cloud" style="width:32px;height:30px;position:absolute;bottom:5px;left:12px;animation:fadeCloud 1.4s ease-in-out infinite alternate;animation-delay:0.3s"></div>
+      <div class="cloud" style="width:18px;height:18px;position:absolute;bottom:0;left:32px;animation:fadeCloud 1.4s ease-in-out infinite alternate;animation-delay:0.5s"></div>
+    </div>
+    <div style="position:relative;width:60px;height:44px;flex-shrink:0">
+      <div class="cloud" style="width:28px;height:26px;position:absolute;bottom:0;left:0;animation:fadeCloud 1.6s ease-in-out infinite alternate;animation-delay:0.2s"></div>
+      <div class="cloud" style="width:40px;height:36px;position:absolute;bottom:6px;left:14px;animation:fadeCloud 1.6s ease-in-out infinite alternate"></div>
+      <div class="cloud" style="width:24px;height:22px;position:absolute;bottom:0;left:38px;animation:fadeCloud 1.6s ease-in-out infinite alternate;animation-delay:0.4s"></div>
+    </div>
+  </div>
+
+  <!-- PLANE -->
+  <svg id="planeSvg" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="bodyGrad" cx="40%" cy="35%" r="65%">
+        <stop offset="0%" stop-color="#ff9ebe"/>
+        <stop offset="60%" stop-color="#f0548a"/>
+        <stop offset="100%" stop-color="#d63070"/>
+      </radialGradient>
+      <radialGradient id="noseGrad" cx="35%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#ffa8c8"/>
+        <stop offset="100%" stop-color="#e05090"/>
+      </radialGradient>
+      <radialGradient id="wingGrad" cx="30%" cy="25%" r="70%">
+        <stop offset="0%" stop-color="#e8386e"/>
+        <stop offset="100%" stop-color="#b82050"/>
+      </radialGradient>
+      <radialGradient id="windowGrad" cx="30%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#e8f4ff"/>
+        <stop offset="100%" stop-color="#9ecfee"/>
+      </radialGradient>
+      <radialGradient id="propHub" cx="40%" cy="35%" r="60%">
+        <stop offset="0%" stop-color="#e8e8ec"/>
+        <stop offset="100%" stop-color="#9898a8"/>
+      </radialGradient>
+      <radialGradient id="propBlade" cx="40%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#d0d0d8"/>
+        <stop offset="100%" stop-color="#707080"/>
+      </radialGradient>
+      <linearGradient id="tailGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e0385e"/>
+        <stop offset="100%" stop-color="#c02848"/>
+      </linearGradient>
+    </defs>
+    <path d="M30 58 Q38 30 55 38 L50 58Z" fill="url(#tailGrad)" stroke="#a01838" stroke-width="0.5"/>
+    <ellipse cx="75" cy="66" rx="46" ry="18" fill="url(#bodyGrad)" stroke="#c03060" stroke-width="0.5"/>
+    <path d="M45 72 Q65 100 90 88 L85 72Z" fill="url(#tailGrad)" stroke="#a01838" stroke-width="0.5"/>
+    <path d="M42 60 Q60 28 95 44 L90 60Z" fill="url(#wingGrad)" stroke="#901830" stroke-width="0.5"/>
+    <path d="M42 60 Q60 28 95 44 L90 60Z" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+    <ellipse cx="110" cy="66" rx="18" ry="14" fill="url(#noseGrad)" stroke="#c03060" stroke-width="0.5"/>
+    <ellipse cx="105" cy="60" rx="11" ry="9" fill="url(#windowGrad)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+    <ellipse cx="103" cy="58" rx="5" ry="4" fill="rgba(255,255,255,0.45)"/>
+    <circle cx="78" cy="63" r="5" fill="url(#windowGrad)" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+    <circle cx="62" cy="63" r="5" fill="url(#windowGrad)" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+    <circle cx="46" cy="63" r="5" fill="url(#windowGrad)" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+    <circle cx="76" cy="61" r="2" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="60" cy="61" r="2" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="44" cy="61" r="2" fill="rgba(255,255,255,0.5)"/>
+    <path d="M28 68 Q20 82 35 76 L38 70Z" fill="url(#tailGrad)" stroke="#a01838" stroke-width="0.5"/>
+    <ellipse cx="72" cy="54" rx="30" ry="6" fill="rgba(255,255,255,0.18)"/>
+    <g id="propGroup" transform="translate(128,66)">
+      <circle r="8" fill="url(#propHub)" stroke="#606070" stroke-width="0.8"/>
+      <circle r="4" fill="#b8b8c8" stroke="#808090" stroke-width="0.5"/>
+      <ellipse cx="0" cy="-22" rx="5" ry="18" fill="url(#propBlade)" stroke="#505060" stroke-width="0.5" opacity="0.9"/>
+      <ellipse cx="0" cy="22"  rx="5" ry="18" fill="url(#propBlade)" stroke="#505060" stroke-width="0.5" opacity="0.9"/>
+      <ellipse cx="-1" cy="-22" rx="2" ry="10" fill="rgba(255,255,255,0.25)"/>
+      <ellipse cx="-1" cy="22"  rx="2" ry="10" fill="rgba(255,255,255,0.25)"/>
+      <circle cx="-2" cy="-2" r="2.5" fill="rgba(255,255,255,0.5)"/>
+    </g>
+  </svg>
+
+  <!-- ROPE -->
+  <svg id="ropeSvg" width="64" height="90" viewBox="0 0 64 90">
+    <line x1="0" y1="42" x2="62" y2="14" stroke="#d4a832" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="48" x2="62" y2="76" stroke="#d4a832" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="41" x2="62" y2="13" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round"/>
+    <line x1="0" y1="47" x2="62" y2="75" stroke="rgba(255,220,120,0.5)" stroke-width="1" stroke-linecap="round"/>
+  </svg>
+
+  <!-- CARD -->
+  <div class="card">
+    <div class="bolt tl"></div>
+    <div class="bolt bl"></div>
+    <div class="card-text" id="meetingText">Meeting with Alex in 2 min</div>
+  </div>
+
+</div>
+
+<script>
+// Spin propeller
+const propGroup = document.getElementById('propGroup');
+let angle = 0;
+(function spinProp() {
+  angle += 8;
+  propGroup.setAttribute('transform', `translate(128,66) rotate(${angle})`);
+  requestAnimationFrame(spinProp);
+})();
+
+const stage = document.getElementById('stage');
+
+function runAnim() {
+  // Wait one frame so scrollWidth is fully computed
+  requestAnimationFrame(() => {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const stageW = stage.scrollWidth;   // full content width, never clipped
+    const stageH = stage.scrollHeight;
+
+    const startX = -stageW - 20;               // fully off left edge
+    const midX   = Math.round((W - stageW) / 2); // perfectly centered
+    const endX   = W + 20;                     // fully off right edge
+
+    const ENTER = 1500;
+    const PAUSE = 2500;
+    const EXIT  = 900;
+
+    let t0 = null;
+    let phase = 'enter';
+    let phaseStart = 0;
+    let bobBase = 0;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function easeIn(t)  { return t * t * t; }
+
+    // Reset position before starting
+    stage.style.left      = startX + 'px';
+    stage.style.top       = '50%';
+    stage.style.transform = 'translateY(-50%)';
+
+    function frame(ts) {
+      if (!t0) { t0 = ts; phaseStart = ts; bobBase = ts; }
+
+      let x;
+
+      if (phase === 'enter') {
+        const t = Math.min((ts - phaseStart) / ENTER, 1);
+        x = startX + easeOut(t) * (midX - startX);
+        if (t >= 1) {
+          phase = 'pause';
+          phaseStart = ts;
+          bobBase = ts;
+        }
+
+      } else if (phase === 'pause') {
+        x = midX;
+        const bob = Math.sin((ts - bobBase) / 320) * 4;
+        stage.style.transform = `translateY(calc(-50% + ${bob}px))`;
+        if (ts - phaseStart >= PAUSE) {
+          phase = 'exit';
+          phaseStart = ts;
+        }
+
+      } else {
+        stage.style.transform = 'translateY(-50%)';
+        const t = Math.min((ts - phaseStart) / EXIT, 1);
+        x = midX + easeIn(t) * (endX - midX);
+        if (t >= 1) {
+          setTimeout(runAnim, 700);
+          return;
+        }
+      }
+
+      stage.style.left = x + 'px';
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  });
+}
+
+window.addEventListener('load', () => setTimeout(runAnim, 300));
+</script>
+
+</body>
+</html>
